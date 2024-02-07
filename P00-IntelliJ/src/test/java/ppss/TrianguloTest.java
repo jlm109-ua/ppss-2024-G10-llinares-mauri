@@ -53,7 +53,6 @@ public class TrianguloTest {
         assertEquals(resultadoEsperado, resultadoReal);
     }
 
-
     @Test
     public void C4_tipo_triangulo_should_be_Isosceles_when_last_two_sides_are_equals() {
         //Preparamos los datos (Arrange)
