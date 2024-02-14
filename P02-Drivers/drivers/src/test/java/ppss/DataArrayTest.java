@@ -2,9 +2,16 @@ package ppss;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import javax.xml.crypto.Data;
+
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -135,5 +142,27 @@ class DataArrayTest {
 
         // ASSERT
         assertEquals("Elemento no encontrado",exception.getMessage());
+    }
+
+    @ParameterizedTest(name = "delete_With_Exceptions_[{index}] Message exception should be {0} when we want to delete {1}")
+    @MethodSource("casosDePrueba")
+    @Tag("parametrizado")
+    @DisplayName("delete_With_Exceptions_")
+    void C8_deleteWithExceptions() {
+        // ARRANGE
+        // TODO: TERMINAR
+        // ACT
+
+        // ASSERT
+
+    }
+
+    private static Stream<Arguments> casosDePrueba() {
+        return Stream.of(
+                Arguments.of("No hay elementos en la colección", 8),
+                Arguments.of("El valor a borrar debe ser > 0", -5),
+                Arguments.of("Colección vacía. Y el valor a borrar debe ser > 0", 0),
+                Arguments.of("Elemento no encontrado", 8)
+        );
     }
 }
