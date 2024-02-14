@@ -1,8 +1,9 @@
+package ppss;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import ppss.ButacasException;
 import ppss.Cine;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class CineTest {
@@ -19,10 +20,10 @@ class CineTest {
         boolean[] asientos = {}; // Array vacío para el C1
         int solicitados = 3;
 
-        // ACT (No hay en este caso)
+        // ACT
+        ButacasException exception = assertThrows(ButacasException.class,() -> cine.reservaButacas(asientos,solicitados));
 
         // ASSERT
-        ButacasException exception = assertThrows(ButacasException.class,() -> cine.reservaButacas(asientos,solicitados));
         assertEquals("No se puede procesar la solicitud",exception.getMessage());
     }
 

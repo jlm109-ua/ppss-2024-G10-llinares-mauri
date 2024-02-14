@@ -37,6 +37,11 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.2.3</version>
+                <!-- Podemos añadirlo así (de manera explícita) o por línea de comandos
+                <configuration>
+                    <excludedGroups>excluido</excludedGroups>
+                </configuration>
+                -->
                 <!--  dependencia para ver los resultados desde maven en forma de árbol
                                      https://github.com/fabriciorby/maven-surefire-junit5-tree-reporter  -->
                 <!--
