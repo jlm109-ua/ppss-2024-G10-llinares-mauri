@@ -8,9 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-
-import javax.xml.crypto.Data;
-
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -29,10 +26,10 @@ class DataArrayTest {
         int[] coleccion = {1,3,5,7};
         int[] coleccionEsperada = {1,3,7};
         int numElemEsperado = 3;
+        this.da = new DataArray(coleccion);
 
         // ACT
         try {
-            this.da = new DataArray(coleccion);
             da.delete(5);
         } catch(DataException exception) {
             System.out.println("ERROR: " + exception.getMessage());
@@ -52,10 +49,10 @@ class DataArrayTest {
         int[] coleccion = {1,3,3,5,7};
         int[] coleccionEsperada = {1,3,5,7};
         int numElemEsperado = 4;
+        this.da = new DataArray(coleccion);
 
         // ACT
         try {
-            this.da = new DataArray(coleccion);
             da.delete(3);
         } catch(DataException exception) {
             System.out.println("ERROR: " + exception.getMessage());
@@ -75,10 +72,10 @@ class DataArrayTest {
         int[] coleccion = {1,2,3,4,5,6,7,8,9,10};
         int[] coleccionEsperada = {1,2,3,5,6,7,8,9,10};
         int numElemEsperado = 9;
+        this.da = new DataArray(coleccion);
 
         // ACT
         try {
-            this.da = new DataArray(coleccion);
             da.delete(4);
         } catch(DataException exception) {
             System.out.println("ERROR: " + exception.getMessage());
@@ -145,24 +142,54 @@ class DataArrayTest {
     }
 
     @ParameterizedTest(name = "delete_With_Exceptions_[{index}] Message exception should be {0} when we want to delete {1}")
-    @MethodSource("casosDePrueba")
+    @MethodSource("casosDePruebaC4_7")
     @Tag("parametrizado")
+    @Tag("conExcepciones")
     @DisplayName("delete_With_Exceptions_")
-    void C8_deleteWithExceptions() {
+    void C8_deleteWithExceptions(String mensajeExcepcion, int elem, int[] coleccion) {
         // ARRANGE
-        // TODO: TERMINAR
+        this.da = new DataArray(coleccion);
+
         // ACT
+        DataException exception = assertThrows(DataException.class,() -> da.delete(elem));
 
         // ASSERT
-
+        assertEquals(mensajeExcepcion,exception.getMessage());
     }
 
-    private static Stream<Arguments> casosDePrueba() {
+    @ParameterizedTest(name = "delete_Without_Exceptions_[{index}] should be {0} when we want to delete {1}")
+    @MethodSource("casosDePruebaC1_3")
+    @Tag("parametrizado")
+    @DisplayName("delete_Without_Exceptions_")
+    void C9_deleteWithoutExceptions(int[] coleccionEsperada, int elem, int[] coleccion) {
+        // ARRANGE
+        this.da = new DataArray(coleccion);
+
+        // ACT
+        assertDoesNotThrow(() -> da.delete(elem));
+
+        // ASSERT
+        assertArrayEquals(da.getColeccion(),coleccionEsperada);
+    }
+
+    private static Stream<Arguments> casosDePruebaC4_7() {
         return Stream.of(
-                Arguments.of("No hay elementos en la colección", 8),
-                Arguments.of("El valor a borrar debe ser > 0", -5),
-                Arguments.of("Colección vacía. Y el valor a borrar debe ser > 0", 0),
-                Arguments.of("Elemento no encontrado", 8)
+                Arguments.of("No hay elementos en la colección",8,new int[]{}),
+                Arguments.of("El valor a borrar debe ser > 0",-5,new int[]{1,3,5,7}),
+                Arguments.of("Colección vacía. Y el valor a borrar debe ser > 0",0,new int[]{}),
+                Arguments.of("Elemento no encontrado",8,new int[]{1,3,5,7})
+        );
+    }
+
+    private static Stream<Arguments> casosDePruebaC1_3() {
+        int[] col1 = {1,3,7};
+        int[] col2 = {1,3,5,7};
+        int[] col3 = {1,2,3,5,6,7,8,9,10};
+
+        return Stream.of(
+                Arguments.of(col1,5,new int[]{1,3,5,7}),
+                Arguments.of(col2,3,new int[]{1,3,3,5,7}),
+                Arguments.of(col3,4,new int[]{1,2,3,4,5,6,7,8,9,10})
         );
     }
 }

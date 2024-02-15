@@ -91,24 +91,21 @@ class CineTest {
     @MethodSource("casosDePrueba")
     @Tag("parametrizado")
     @DisplayName("reservaButacas_")
-    void reservaButacasC5(boolean reserved, int solicitados, String info){
-        // ASSERT
-        boolean[] asientos = {};
+    void reservaButacasC5(boolean reserved, int solicitados, String info,boolean[] asientos){
+        // ASSERT (Lo recibimos por los parámetros)
 
         // ACT
         boolean resultadoReal = cine.reservaButacas(asientos,solicitados);
 
         // ARRANGE
         assertEquals(reserved, resultadoReal);
-
-        Assertions.fail(); // TODO: ARREGLAR CÓMO SE PONEN LOS ASIENTOS A PARTIR DE ESTA INFO
     }
 
     private static Stream<Arguments> casosDePrueba() {
         return Stream.of(
-                Arguments.of(false, 0, "fila has no seats"),
-                Arguments.of(true, 2, "there are 2 free seats"),
-                Arguments.of(false, 1, "all seats are already reserved")
+                Arguments.of(false, 0, "fila has no seats",new boolean[]{}),
+                Arguments.of(true, 2, "there are 2 free seats",new boolean[]{false,false,false,true,true}),
+                Arguments.of(false, 1, "all seats are already reserved",new boolean[]{true,true,true})
         );
     }
 }
