@@ -28,9 +28,9 @@ class GestorLlamadasTest {
         double resultadoEsperado = 105;
 
         // ACT
-        double resultadoReal = sut.calculaConsumo(22);
+        double resultadoReal = sut.calculaConsumo(10);
 
         // ASSERT
-        assertEquals(resultadoReal,resultadoEsperado);
+        assertEquals(resultadoEsperado,resultadoReal);
     }
 }
