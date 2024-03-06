@@ -1,8 +1,15 @@
 package ppss;
-import
+
+import java.util.Objects;
 
 public class Factoria {
-    public static Operacion createOp() {
-        return new Operacion();
+    protected IOperacionBO operacion = null;
+
+    public IOperacionBO createOp() {
+        return Objects.requireNonNullElseGet(this.operacion, Operacion::new);
+    }
+
+    public void setOperacion(Operacion op) {
+        this.operacion = op;
     }
 }
