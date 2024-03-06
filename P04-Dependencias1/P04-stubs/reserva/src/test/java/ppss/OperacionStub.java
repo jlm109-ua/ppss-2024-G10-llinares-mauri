@@ -11,7 +11,7 @@ public class OperacionStub extends Operacion {
             throw new SocioInvalidoException();
         } else if (isbn.equals("33333") || isbn.equals("44444")) {
             throw new IsbnInvalidoException();
-        } /*else if (socio.equals("Luis") && isbn.equals("11111")) {
+        } /** else if (socio.equals("Luis") && isbn.equals("22222")) {
             throw new JDBCException(); // ¿CÓMO?
         }*/
     }

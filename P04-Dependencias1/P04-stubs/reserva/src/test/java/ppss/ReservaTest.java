@@ -1,6 +1,7 @@
 package ppss;
 
 import org.junit.jupiter.api.Test;
+import ppss.excepciones.JDBCException;
 import ppss.excepciones.ReservaException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -101,7 +102,7 @@ class ReservaTest {
         sut.setFactoria(factoria);
 
         // ACT
-        ReservaException excepcion = assertThrows(ReservaException.class, ()->sut.realizaReserva(login,password,socio,isbns));
+        JDBCException excepcion = assertThrows(JDBCException.class, ()->sut.realizaReserva(login,password,socio,isbns));
 
         // ASSERT
         assertEquals(resultadoEsperado,excepcion.getMessage());
