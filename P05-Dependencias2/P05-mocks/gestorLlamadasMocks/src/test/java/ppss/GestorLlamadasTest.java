@@ -34,6 +34,7 @@ class GestorLlamadasTest {
 
         // ASSERT
         assertEquals(resultadoEsperado,resultadoReal);
+        ctrl.verify();
     }
 
     @Test
@@ -51,5 +52,6 @@ class GestorLlamadasTest {
 
         // ASSERT
         assertEquals(resultadoEsperado,resultadoReal);
+        ctrl.verify();
     }
 }
