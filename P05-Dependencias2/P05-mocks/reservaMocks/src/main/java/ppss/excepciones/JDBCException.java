@@ -1,4 +1,3 @@
 package ppss.excepciones;
 
-public class JDBCException {
-}
+public class JDBCException extends Exception { }

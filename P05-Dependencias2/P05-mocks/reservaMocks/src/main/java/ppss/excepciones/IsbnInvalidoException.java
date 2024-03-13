@@ -1,2 +1,4 @@
-package ppss.excepciones;public class IsbnInvalidoException {
+package ppss.excepciones;
+
+public class IsbnInvalidoException extends Exception {
 }

@@ -1,7 +1,11 @@
 package ppss;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.easymock.IMocksControl;
 
-class ReservaTest {
+class ReservaMockTest {
+    private IMocksControl ctrl;
+    private IOperacionBO mockOperacion;
+    private FactoriaBOs mockFactoria;
+    private Reserva reservaTestable;
 
 }

@@ -1,2 +1,4 @@
-package ppss.excepciones;public class SocioInvalidoException extends Exception {
+package ppss.excepciones;
+
+public class SocioInvalidoException extends Exception {
 }
