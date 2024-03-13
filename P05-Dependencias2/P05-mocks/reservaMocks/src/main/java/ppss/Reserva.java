@@ -18,7 +18,7 @@ public class Reserva {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    public void realizaREserva(String login, String password, String socio, String [] isbns) throws ReservaException {
+    public void realizaReserva(String login, String password, String socio, String [] isbns) throws ReservaException {
         ArrayList<String> errores = new ArrayList<String>();
         if(!compruebaPermisos(login, password, Usuario.BIBLIOTECARIO)) { // Dependencia externa -> partial mock
             errores.add("ERROR de permisos");
@@ -27,9 +27,9 @@ public class Reserva {
             fd = getFactoriaBO();
             IOperacionBO io = fd.getOperacionBO(); // Dependencia externa -> mockFactoria
             try {
-                for(String isbn: isbns) {
+                for (String isbn : isbns) {
                     try {
-                        io.operacionReserva(socio,isbn); // Dependencia externa -> mockOperacion
+                        io.operacionReserva(socio, isbn); // Dependencia externa -> mockOperacion
                     } catch (IsbnInvalidoException iie) {
                         errores.add("ISBN invalido" + ":" + isbn);
                     }
@@ -39,13 +39,12 @@ public class Reserva {
             } catch (JDBCException je) {
                 errores.add("CONEXION invalida");
             }
-            if (!errores.isEmpty()) {
-                String mensajeError = "";
-                for(String error: errores) {
-                    mensajeError += error + "; ";
-                }
-                throw new ReservaException(mensajeError);
+        } if (!errores.isEmpty()) {
+            String mensajeError = "";
+            for(String error: errores) {
+                mensajeError += error + "; ";
             }
+            throw new ReservaException(mensajeError);
         }
     }
 }
