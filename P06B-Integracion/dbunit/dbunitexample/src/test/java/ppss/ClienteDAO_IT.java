@@ -69,7 +69,7 @@ public class ClienteDAO_IT {
         cliente.setCiudad("Anycity");
 
         //inicializamos la BD
-        IDataSet dataSet = new FlatXmlDataFileLoader().load("/cliente-esperado.xml");
+        IDataSet dataSet = new FlatXmlDataFileLoader().load("/cliente-init.xml");
         databaseTester.setDataSet(dataSet);
         databaseTester.onSetup();
 
@@ -81,7 +81,7 @@ public class ClienteDAO_IT {
         ITable actualTable = databaseDataSet.getTable("cliente");
 
         //creamos el dataset con el resultado esperado
-        IDataSet expectedDataSet = new FlatXmlDataFileLoader().load("/cliente-init.xml");
+        IDataSet expectedDataSet = new FlatXmlDataFileLoader().load("/cliente-esperado.xml");
         ITable expectedTable = expectedDataSet.getTable("cliente");
 
         Assertion.assertEquals(expectedTable, actualTable);
@@ -122,7 +122,7 @@ public class ClienteDAO_IT {
         cliente.setCiudad("Anycity");
 
         //inicializamos la BD
-        IDataSet dataSet = new FlatXmlDataFileLoader().load("/cliente-esperado2.xml");
+        IDataSet dataSet = new FlatXmlDataFileLoader().load("/cliente-init2.xml");
         databaseTester.setDataSet(dataSet);
         databaseTester.onSetup();
 
@@ -134,7 +134,61 @@ public class ClienteDAO_IT {
         ITable actualTable = databaseDataSet.getTable("cliente");
 
         //creamos el dataset con el resultado esperado
-        IDataSet expectedDataSet = new FlatXmlDataFileLoader().load("/cliente-init.xml");
+        IDataSet expectedDataSet = new FlatXmlDataFileLoader().load("/cliente-esperado.xml");
+        ITable expectedTable = expectedDataSet.getTable("cliente");
+
+        Assertion.assertEquals(expectedTable, actualTable);
+    }
+
+    @Test
+    public void D5_update_should_update_1_from_cliente() throws Exception {
+        Cliente cliente =  new Cliente(1,"John", "Smith");
+        cliente.setDireccion("1 Main Street");
+        cliente.setCiudad("Anycity");
+
+        Cliente updatedCliente = new Cliente(1, "John", "Smith");
+        cliente.setDireccion("Other Street");
+        cliente.setCiudad("NewCity");
+
+        //inicializamos la BD
+        IDataSet dataSet = new FlatXmlDataFileLoader().load("/cliente-init3.xml");
+        databaseTester.setDataSet(dataSet);
+        databaseTester.onSetup();
+
+        //invocamos a la SUT
+        Assertions.assertDoesNotThrow(()->clienteDAO.update(updatedCliente));
+
+        //recuperamos los datos de la BD después de invocar al SUT
+        IDataSet databaseDataSet = connection.createDataSet();
+        ITable actualTable = databaseDataSet.getTable("cliente");
+
+        //creamos el dataset con el resultado esperado
+        IDataSet expectedDataSet = new FlatXmlDataFileLoader().load("/cliente-esperado3.xml");
+        ITable expectedTable = expectedDataSet.getTable("cliente");
+
+        Assertion.assertEquals(expectedTable, actualTable);
+    }
+
+    @Test
+    public void D6_retrieve_should_give_1() throws Exception {
+        Cliente cliente =  new Cliente(1,"John", "Smith");
+        cliente.setDireccion("1 Main Street");
+        cliente.setCiudad("Anycity");
+
+        //inicializamos la BD
+        IDataSet dataSet = new FlatXmlDataFileLoader().load("/cliente-init3.xml");
+        databaseTester.setDataSet(dataSet);
+        databaseTester.onSetup();
+
+        //invocamos a la SUT
+        Assertions.assertDoesNotThrow(()->clienteDAO.retrieve(1));
+
+        //recuperamos los datos de la BD después de invocar al SUT
+        IDataSet databaseDataSet = connection.createDataSet();
+        ITable actualTable = databaseDataSet.getTable("cliente");
+
+        //creamos el dataset con el resultado esperado
+        IDataSet expectedDataSet = new FlatXmlDataFileLoader().load("/cliente-esperado.xml");
         ITable expectedTable = expectedDataSet.getTable("cliente");
 
         Assertion.assertEquals(expectedTable, actualTable);
