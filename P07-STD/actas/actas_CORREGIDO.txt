@@ -1,0 +1,102 @@
+DOCUMENTACIÓN DEL DIAGRAMA DE TRANSICIÓN DE ESTADOS EJERCICIO 2 (ACTAS)
+
+
+ENTIDAD A MODELAR:
+
+- Gestión de actas de una asignatura
+
+ESTADOS
+
+- ini = Estado inicial.
+- Autenticando = El sistema espera a que el profesor introduzca un código.
+- CrearActa = El sistema crea el acta y espera a que el profesor introduzca las notas.
+- ModificarActa = El sistema espera a que el profesor cierre el acta, modifique las notas erróneas o añada otras.
+- CerrarActa = El sistema cierra el acta y espera a que el profesor salga del sistema.
+
+EVENTOS
+
+- auth() = Se intenta autenticar mediante el código pasado por parámetro.
+- crearActa() = Se crear el acta con las notas iniciales pasadas por parámetro.
+- ponerNota() = Se añade la nota introducida por el profesor.
+- guardarActa() = Se guarda el acta con las notas actuales.
+- cerrarActa() = Se intenta cerrar el acta con las notas actuales.
+- salir() = El profesor sale del sistema.
+
+
+GUARDAS
+
+- códigoIncorrecto = El código introducido por el profesor no es válido.
+- !códigoIncorrecto = El código introducido por el profesor es válido.
+- actaStatus = Indica el estado del acta: nulo, creada o cerrada.
+- ficheroNotas = Se introduce un fichero con las notas.
+- notasManual = Se introducen las notas de manera manual.
+- nota = Se introduce una nota.
+- notas = Estado de las notas.
+- notasIncorrectas = De todas las notas introducidas hay al menos una errónea.
+- !notasIncorrectas = De todas las notas introducidas no hay erróneas.
+
+ACCIONES
+
+- errorAuth = Se muestra el mensaje "Error de acceso".
+- crear = Se muestra el mensaje "Hola, bienvenido" y se crea el acta automáticamente. 
+- añadirNota = Se añade una nota individual al acta.
+- añadirNotas = Se añaden las notas al acta (manual o por fichero).
+- guardar = Se guarda el acta y se muestra el mensaje "Notas guardadas correctamente".
+- errorCerrando = Se muestran las notas incorrectas junto al mensaje "No se puede cerrar el acta".
+- cerrar = Se cierra el acta y se muestra el mensaje "Acta cerrada".
+- salir = Se abandona el sistema.
+- modificar = Se modifica el acta.
+
+ATRIBUTOS (asociados a eventos y/o acciones)
+
+- código = Código alfanúmerico para autenticarse.
+- notas = Notas que se introducen en el acta.
+
+-----------------------------------------------------------
+DISEÑO DE CASOS DE PRUEBA
+
+CAMINOS A PROBAR
+
+C1: 0-1-2-3-5-7-8-9
+C2: 0-2-4-13
+C3: 0-14-9
+C4: 0-11
+C5: 0-2-12
+C6: 0-10-13
+
+CASOS DE PRUEBA
+
+Asumimos:
+- "a1": Código autorizado.
+- "a2": Código NO autorizado.
+- "notas.txt": Es un fichero con notas correctas.
+- "notas2.txt": Es un fichero con una nota errónea "A+".
+- 8.0: Nota correcta.
+- "A+": Nota incorrecta.
+- "notas.bin": Supongamos que el fichero de notas se guarda en el servidor como binario y es correcto.
+- "notas2.bin": Supongamos que el fichero de notas se guarda en el servidor como binario y es incorrecto.
+
+TODO: AÑADIR actaStatus A LAS VERIFICACIONES
+
+C1: auth("a2") - autenticar_código fallido -> "Error de acceso"
+    auth("a1") - autenticar_código correcto -> "Hola, bienvenido"
+    crearActa("notas.txt") - verificar_notas correcto
+    ponerNota(8.0) - verificar_nota correcto
+    cerrarActa("notas2.bin") - verificar_notas fallido
+    cerrarActa
+
+SEGUIR
+
+C2: auth("a1") - autenticar_código correcto -> "Hola, bienvenido"
+
+C3: auth("a1") - autenticar_código correcto -> "Hola, bienvenido"
+    salir
+
+C4: salir
+
+C5: auth("a1") - autenticar_código correcto -> "Hola, bienvenido"
+    salir
+
+C6: auth("a1") - autenticar_código correcto -> "Hola, bienvenido"
+    salir
+    

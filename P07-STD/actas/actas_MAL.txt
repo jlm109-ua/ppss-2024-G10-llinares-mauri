@@ -1,0 +1,67 @@
+DOCUMENTACIÓN DEL DIAGRAMA DE TRANSICIÓN DE ESTADOS EJERCICIO 2 (ACTAS)
+
+
+ENTIDAD A MODELAR:
+
+- Gestión de actas de una asignatura
+
+ESTAODS
+
+- EsIni = Estado inicial. Suponemos que no ha accedido a la web/aplicación.
+- Autenticar = El sistema espera a que el profesor se autentique.
+- Crear = El sistema crea el acta y espera a que el profesor introduzca notas.
+- Modificar = El sistema espera a que el profesor termine de introducir notas.
+- Notas Erróneas = El sistema espera a que el profesor corrija las notas erróneas.
+- Cerrar = El sistema cierra el acta y espera a que el profesor cree una nueva o cierre el sistema.
+- EstadoSalir = Guarda el estado en el que se encuentra el sistema actual.
+- EsFin = Estado final. Suponemos que cierra la web/aplicación.
+
+EVENTOS
+
+- auth = El profesor se intenta autenticar.
+- introNotas = El profesor introduce notas.
+- guardar = Se guardan las notas.
+- cerrar = Se cierra un acta.
+
+GUARDAS
+
+- cod.check() = Se comprueba si el código es correcto.
+- actaStatus = Se comprueba si el acta actual está creada o no hay acta.
+- notasManual = Se introducen las notas de manera manual.
+- notasFile = Se introducen las notas con un fichero.
+- notas.check() = Se comprueba si hay notas mal.
+
+ACCIONES
+
+- AuthAgain = Se muestra el mensaje "Error de acceso".
+- WelcomeCrear = Se muestra el mensaje "Hola, bienvenido" y se procede a crear un acta.
+- WelcomeMod = Se muestra el mensaje "Hola, bienvenido" y se procede a modificar un acta.
+- modNotas = Se procede a modificar las actas.
+- mostrarIncorrectas = Se muestran las notas incorrectas.
+- guardarActa = Se procede a guardar el acta y se muestra el mensaje "Notas guardadas correctamente".
+- cerrarActa = Se cierra el acta y se sale del sistema.
+- checkActa = Se muestra el mensaje "No se puede cerrar el acta".
+
+ATRIBUTOS (asociados a eventos y/o acciones)
+
+- 
+
+
+-----------------------------------------------------------
+DISEÑO DE CASOS DE PRUEBA
+
+
+CAMINOS A PROBAR
+
+C1: E1-E2-E3-E4
+C2: E5-E6-E7-E8
+C3: E9-E10-E11-E12
+C4: Añade todos los caminos que necesites
+
+
+CASOS DE PRUEBA
+
+C1: acciones1 - verificaciónCorrespondiente
+    acciones2 - verificaciónCorrespondiente
+    AÑADE TODOAS LAS ACCIONES Y VERIFICACIONES QUE NECESITES PARA CADA CX
+
