@@ -1,0 +1,71 @@
+DOCUMENTACIÓN DEL DIAGRAMA DE TRANSICIÓN DE ESTADOS EJERCICIO 1 (SUPERMERCADO)
+
+
+ENTIDAD A MODELAR:
+
+- Terminal de ventas de un supermercado
+
+ESTADOS: Representan las condiciones en las que el sistema está esperando a algún evento.
+
+- EsIni = Estado inicial del sistema. Suponemos que la máquina está apagada.
+- Autenticación = El sistema espera a que un encargado se autentique.
+- CajaActiva = La caja se activa y espera a que algún cliente coloque los productos sobre el terminal.
+- Escanear = El sistema escanea los productos hasta que la terminal se vacíe.
+- Pago = Se espera a que el cliente realize el pago.
+- Ticket = Se imprime el ticket.
+- Cancelar = El cliente cancela la compra.
+- EsFin = Estado final del sistema. Suponemos que se apaga la máquina.
+
+EVENTOS: Entradas del sistema que provocan posibles cambios de estado.
+
+- encender = Se enciende la máquina.
+- auth = Comprueba si el código introducido contiene los permisos de autorización.
+- escaneo = Se escanea un producto.
+- terminal = Comprueba que la terminal no contenga ningún producto.
+- clientePaga = El cliente realiza un pago con tarjeta.
+- clienteAtendido = Se finaliza la compra del cliente para esperar a un nuevo cliente.
+- cerrarSesión = El encargado cierra su sesión en la caja.
+
+GUARDAS: 
+
+- códigoIncorrecto = Código introducido sin permisos.
+- códigoVálido = Código introducido con permisos.
+- escaneoErróneo = Hay errores en el escaneo.
+- terminalVacía = La terminal no tiene ningún producto.
+- terminalOcupada = Hay al menos un producto en la terminal.
+- tarjetaVálida = Tarjeta válida para el pago.
+- tarjetaIncorrecta = Se produce un error en el pago.
+- cliente = El cliente decide cancelar la compra.
+- salir = El encargado sale del sistema.
+
+ACCIONES
+
+- autenticar = Se requiere la autenticación del encargado.
+- "Error de acceso" = Se muestra por pantalla el mensaje de "Error de acceso".
+- "Caja activada" = Se muestra por pantalla el mensaje de "Caja activada".
+- currentTotal = Se muestra el subtotal por pantalla.
+- "Vuelva a pasar el producto" = Se muestra por pantalla el mensaje de "Vuelva a pasar el producto".
+- clienteCancela = El cliente cancela su compra.
+- salirSistema = El encargado finaliza su turno y sale del sistema.
+- "Error en pago" = Se muestra por pantalla el mensaje de "Error en pago".
+- ticket = Se ofrece el ticket al cliente.
+
+ATRIBUTOS (asociados a eventos y/o acciones)
+
+Ninguno.
+
+-----------------------------------------------------------
+DISEÑO DE CASOS DE PRUEBA
+
+CAMINOS A PROBAR
+
+C1: EsIni - Autenticación - CajaActiva - CajaActiva - Pago - Ticket - CajaActiva - Autenticación - EsFin
+C2: EsIni - Autenticación - CajaActiva - CajaActiva - CajaActiva - Cancelar - CajaActiva - Autenticación - EsFin
+C3: EsIni - Autenticación - Autenticación - CajaActiva - CajaActiva - Pago - Pago - Ticket - CajaActiva - Autenticación - EsFin
+
+CASOS DE PRUEBA
+
+C1: autenticar - verificaciónCorrespondiente
+    acciones2 - verificaciónCorrespondiente
+
+
