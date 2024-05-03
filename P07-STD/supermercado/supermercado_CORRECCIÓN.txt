@@ -1,0 +1,100 @@
+DOCUMENTACIÓN DEL DIAGRAMA DE TRANSICIÓN DE ESTADOS EJERCICIO 1 (SUPERMERCADO)
+
+
+ENTIDAD A MODELAR:
+
+- Terminal de ventas de un supermercado
+
+ESTAODS
+
+- ini = Estado inicial.
+- Autenticando = La terminal espera a que el encargado se autentique.
+- En Espera = La terminal espera a que algún cliente coloque productos.
+- Escaneando = La terminal escanea productos hasta que no quede ninguno.
+- Procesando pago = La terminal espera a que el cliente efectue el pago.
+- fin = Estado final.
+
+EVENTOS
+
+- auth() = El encargado se autentica usando un código.
+- terminal() = La terminal comprueba si hay productos.
+- escanear() = Se efectua el escaneo de un producto.
+- pagar() = Se realiza el pago de la compra con una tarjeta.
+- cerrarSesión() = El encargado cierra la sesión.
+
+GUARDAS
+
+- códigoIncorrecto = El código introducido por el encargado para autenticarse es incorrecto.
+- !códigoIncorrecto = El código introducido por el encargado para autenticarse es correcto.
+- terminalVacía = La terminal se encuentra vacía.
+- !terminalVacía = La terminal contiene productos.
+- errorScanner = Ocurre un error durante el escaneo de un producto.
+- !errorScanner = No ocurre ningún error durante el escaneo de un producto.
+- cancelar = El cliente cancela la compra.
+- tarjetaVálida = La tarjeta usada es válida.
+- !tarjetaVálida = La tarjeta usada no es válida.
+- salir = El encargado cierra su sesión.
+
+ACCIONES
+
+- errorAcceso = Se muestra el mensaje "Error de acceso".
+- activarCaja = Se activa la caja y se muestra el mensaje "Caja activada".
+- escanear = Se activa el escaner.
+- errorEscaneando = Se muestra el mensaje "Vuelva a pasar el producto" y no se añade a la compra.
+- totalActual = Se añade el producto y se muestra el subtotal.
+- errorEnPago = Se vuelve a pedir el pago al cliente y se muestra el mensaje "Error en pago".
+- clienteAtendidoCancela = Se cancela la compra y se espera a un nuevo cliente.
+- clienteAtendidoConTicket = Se confirma la compra y se imprime el ticket.
+- salirSistema = El sistema cierra la sesión del encargado.
+
+
+ATRIBUTOS (asociados a eventos y/o acciones)
+
+- código = Código introducido por el encargado para autenticarse.
+- producto = Producto del supermercado.
+- tarjeta = Tarjeta de crédito que se usará para pagar.
+- productos = Productos que se encuentran en el terminal.
+
+-----------------------------------------------------------
+DISEÑO DE CASOS DE PRUEBA
+
+CAMINOS A PROBAR
+
+C1: 0-1-2-3-4-4-6-9-10
+C2: 0-2-3-5-4-4-4-4-6-7-8-10
+
+CASOS DE PRUEBA
+
+Asumimos que:
+- "123r56" es un código NO válido.
+- 123456 es un código válido.
+- 24 es un código de producto válido que cuesta 1,50€.
+- 75 es un código de producto válido que cuesta 6,20€.
+- 80 es un código de producto válido que cuesta 0,95€.
+- BBVA2222 es una tarjeta válida.
+- BBVA1111 es una tarjeta no válida.
+- 0p significa que hay 0 productos en el terminal.
+- 2p significa que hay 2 productos en el terminal.
+- 4p significa que hay 4 productos en el terminal.
+
+C1: auth("123r56") - verificar_código fallido -> "Error de acceso"
+    auth(123456) - verificar_código correcto -> Se activa la caja.
+    terminal(3p) - verificar_productos_terminal -> Se activa el escaner.
+    escanear(24) - verificar_código_producto correcto -> "1,50€"
+    escanear(75) - verificar_código_producto correcto -> "7,70€"
+    terminal(0p) - verificar_productos_terminal -> "7,70€"
+    pagar(BBVA2222) - verificar_tarjeta correcto -> Se imprime el ticket.
+    cerrarSesión() - salir
+
+C2: auth(123456) - verificar_código correcto -> Se activa la caja.
+    terminal(5p) - verificar_productos_terminal -> Se activa el escaner.
+    escanear(75) - verificar_código_producto fallida -> "Vuelva a escanear el producto"
+    escanear(75) - verificar_código_producto correcto -> "6,20€"
+    escanear(75) - verificar_código_producto correcto -> "12,40€"
+    escanear(75) - verificar_código_producto correcto -> "18,60€"
+    escanear(80) - verificar_código_producto correcto -> "19,55€"
+    terminal(0p) - verificar_productos_terminal -> "19,55€
+    pagar(BBVA1111) - verificar_tarjeta fallido -> "Error en pago"
+    pagar(BBVA1111) - cancelar
+    cerrarSesión() - salir
+    
