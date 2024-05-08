@@ -60,7 +60,6 @@ public class TestLogin {
         // 6. Rellenamos el campo con la contraseña y volvemos a enviar los datos del formulario.
         String password = "juanito1234";
         driver.findElement(By.id("pass")).sendKeys(password);
-
         driver.findElement(By.id("send2")).submit();
 
         // 7. Verificamos que estamos en la página correcta usando su título ("My Account").
