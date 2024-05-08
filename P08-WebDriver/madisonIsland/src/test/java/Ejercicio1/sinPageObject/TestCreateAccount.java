@@ -1,32 +1,45 @@
 package Ejercicio1.sinPageObject;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class TestCreateAccount {
     WebDriver driver;
 
     @BeforeEach
+    /**
+     * Creamos el driver antes de cada test.
+     */
     public void setup(){
         driver = new ChromeDriver();
     }
 
+    @AfterEach
+    /**
+     * Cerramos el navegador después de cada test.
+     */
+    public void tearDown() { driver.close(); }
+
     @Test
     @Tag("OnlyOnce")
     public void S1_scenario_createAccount_should_create_new_account_in_the_demo_store_when_this_account_does_not_exist() {
-        driver.get("https://madison-island.com/");
+        driver.get("http://demo-store.seleniumacademy.com/");
         // 1. Verificamos que el título de la página de inicio es el correcto ("Madison Island")
         String titulo = driver.getTitle();
         String tituloEsperado = "Madison Island";
         Assertions.assertEquals(tituloEsperado,titulo);
 
         // 2. Seleccionamos Account, y a continuación seleccionamos el hiperenlace Login
-        driver.findElement(By.cssSelector("site-header__icon site-header__account")).click();
+        driver.findElement(By.cssSelector("#header > div > div.skip-links > div > a")).click();
+        driver.findElement(By.cssSelector("#header-account > div > ul > li.last > a")).click();
 
         // 3. Verificamos que el titulo de la página es el correcto ("Customer Login")
         titulo = driver.getTitle();
@@ -34,30 +47,44 @@ public class TestCreateAccount {
         Assertions.assertEquals(tituloEsperado,titulo);
 
         // 4. Seleccionamos el botón "Create Account"
-        driver.findElement(By.cssSelector("#customer_register_link")).click();
+        driver.findElement(By.cssSelector("#login-form > div > div.col-1.new-users > div.buttons-set > a")).click();
 
         // 5. Verificamos que estamos en la página correcta usando el título de la misma ("Create new Customer Account")
         titulo = driver.getTitle();
-        tituloEsperado = "Create new Customer Account";
+        tituloEsperado = "Create New Customer Account";
         Assertions.assertEquals(tituloEsperado,titulo);
 
         // 6. Rellenamos los campos con los datos de la cuenta excepto el campo "Confirmation" (cada uno de vosotros elegirá unos valores diferentes), y enviamos los datos del formulario. Nota: el valor del password debe tener 6 o más caracteres.
         String firstName = "Juan";
-        String lastName = "Juanito";
+        String middleName = "Juanito";
+        String lastName = "Juan";
         String email = "juanjuanitojuan@gmail.com";
         String password = "juanito1234";
-        driver.findElement(By.id("FirstName")).sendKeys(firstName);
-        driver.findElement(By.id("LastName")).sendKeys(lastName);
-        driver.findElement(By.id("Email")).sendKeys(email);
-        driver.findElement(By.id("CreatePassword")).sendKeys(password);
+        driver.findElement(By.id("firstname")).sendKeys(firstName);
+        driver.findElement(By.id("middlename")).sendKeys(middleName);
+        driver.findElement(By.id("lastname")).sendKeys(lastName);
+        driver.findElement(By.id("email_address")).sendKeys(email);
+        driver.findElement(By.id("password")).sendKeys(password);
 
-        // ¿QUÉ CAMPO CONFIRMATION?
+        // Enviamos el formulario.
+        driver.findElement(By.cssSelector("#form-validate > div.buttons-set > button")).click();
 
         // 7. Verificamos que nos aparece el mensaje "This is a required field." debajo del campo que hemos dejado vacío
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5)); // Esperamos 5 segundos a que aparezca el mensaje.
+        WebElement required = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#advice-required-entry-confirmation"))); // Guardamos el elemento de la web
+
+        Assertions.assertTrue(required.isDisplayed(),"ERROR: Elemento CONFIRMATION no mostrado."); // Confirmamos que se haya mostrado el elemento.
+
         // 8. Rellenamos el campo que nos falta y volvemos a enviar los datos del formulario.
+        driver.findElement(By.id("confirmation")).sendKeys(password);
+        driver.findElement(By.cssSelector("#form-validate > div.buttons-set > button")).click();
+
         // 9. Volvemos a la página anterior (ver observaciones)
+        driver.navigate().back();
+
         // 10.Verificamos que estamos en la página correcta usando su título ("My Account").
-
-
+        titulo = driver.getTitle();
+        tituloEsperado = "My Account";
+        Assertions.assertEquals(tituloEsperado,titulo);
     }
 }
