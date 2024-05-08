@@ -35,7 +35,7 @@ public class TestLogin {
 
         // 4. Rellenamos el campo email con el email de la cuenta que hemos creado en el driver createAccount() y enviamos el formulario.
 
-        // QUÉ DRIVER CREATEACCOUNT() HEMOS CREADO???
+        
 
         // 5. Verificamos que nos aparece el mensaje "This is a required field" debajo del campo que hemos dejado vacío.
         // 6. Rellenamos el campo con la contraseña y volvemos a enviar los datos del formulario.
