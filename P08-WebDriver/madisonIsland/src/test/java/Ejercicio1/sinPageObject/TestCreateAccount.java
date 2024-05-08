@@ -20,6 +20,7 @@ public class TestCreateAccount {
      */
     public void setup(){
         driver = new ChromeDriver();
+        driver.get("http://demo-store.seleniumacademy.com/");
     }
 
     @AfterEach
@@ -31,7 +32,6 @@ public class TestCreateAccount {
     @Test
     @Tag("OnlyOnce")
     public void S1_scenario_createAccount_should_create_new_account_in_the_demo_store_when_this_account_does_not_exist() {
-        driver.get("http://demo-store.seleniumacademy.com/");
         // 1. Verificamos que el título de la página de inicio es el correcto ("Madison Island")
         String titulo = driver.getTitle();
         String tituloEsperado = "Madison Island";
@@ -67,7 +67,8 @@ public class TestCreateAccount {
         driver.findElement(By.id("password")).sendKeys(password);
 
         // Enviamos el formulario.
-        driver.findElement(By.cssSelector("#form-validate > div.buttons-set > button")).click();
+        // driver.findElement(By.cssSelector("#form-validate > div.buttons-set > button")).click();
+        driver.findElement(By.cssSelector("#form-validate > div.buttons-set > button")).submit();
 
         // 7. Verificamos que nos aparece el mensaje "This is a required field." debajo del campo que hemos dejado vacío
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5)); // Esperamos 5 segundos a que aparezca el mensaje.
@@ -77,7 +78,7 @@ public class TestCreateAccount {
 
         // 8. Rellenamos el campo que nos falta y volvemos a enviar los datos del formulario.
         driver.findElement(By.id("confirmation")).sendKeys(password);
-        driver.findElement(By.cssSelector("#form-validate > div.buttons-set > button")).click();
+        driver.findElement(By.cssSelector("#form-validate > div.buttons-set > button")).submit();
 
         // 9. Volvemos a la página anterior (ver observaciones)
         driver.navigate().back();
