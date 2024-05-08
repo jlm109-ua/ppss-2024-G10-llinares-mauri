@@ -71,10 +71,8 @@ public class TestCreateAccount {
         driver.findElement(By.cssSelector("#form-validate > div.buttons-set > button")).submit();
 
         // 7. Verificamos que nos aparece el mensaje "This is a required field." debajo del campo que hemos dejado vacío
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5)); // Esperamos 5 segundos a que aparezca el mensaje.
-        WebElement required = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#advice-required-entry-confirmation"))); // Guardamos el elemento de la web
-
-        Assertions.assertTrue(required.isDisplayed(),"ERROR: Elemento CONFIRMATION no mostrado."); // Confirmamos que se haya mostrado el elemento.
+        String required = driver.findElement(By.cssSelector("#advice-required-entry-confirmation")).getText(); // Guardamos el elemento de la web
+        Assertions.assertEquals(required,"This is a required field."); // Confirmamos que se haya mostrado el elemento.
 
         // 8. Rellenamos el campo que nos falta y volvemos a enviar los datos del formulario.
         driver.findElement(By.id("confirmation")).sendKeys(password);
