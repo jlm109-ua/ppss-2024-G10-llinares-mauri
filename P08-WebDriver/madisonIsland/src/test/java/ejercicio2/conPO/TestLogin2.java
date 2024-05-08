@@ -1,5 +1,6 @@
 package ejercicio2.conPO;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
@@ -11,6 +12,12 @@ public class TestLogin2 {
     @BeforeEach
     public void setup(){
         driver = new ChromeDriver();
+        driver.get("http://demo-store.seleniumacademy.com/");
+    }
+
+    @AfterEach
+    public void tearDown(){
+        driver.close();
     }
 
     @Test

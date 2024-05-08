@@ -54,10 +54,8 @@ public class TestLogin {
         driver.findElement(By.id("send2")).submit();
 
         // 5. Verificamos que nos aparece el mensaje "This is a required field" debajo del campo que hemos dejado vacío.
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement required = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("advice-required-entry-pass")));
-
-        Assertions.assertTrue(required.isDisplayed(),"ERROR: Elemento CONFIRMATION de la contraseña no mostrado."); // Confirmamos que se haya mostrado el elemento.
+        String required = driver.findElement(By.id("advice-required-entry-pass")).getText();
+        Assertions.assertEquals(required,"This is a required field."); // Confirmamos que se haya mostrado el elemento.
 
         // 6. Rellenamos el campo con la contraseña y volvemos a enviar los datos del formulario.
         String password = "juanito1234";
@@ -95,8 +93,7 @@ public class TestLogin {
         driver.findElement(By.id("send2")).submit();
 
         // 5. Verificamos que nos aparece el mensaje "Invalid login or password".
-        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(10));
-        WebElement invalidPassword = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("body > div > div.page > div.main-container.col1-layout > div > div > div.account-login > ul > li > ul > li > span")));
-        Assertions.assertTrue(invalidPassword.isDisplayed(),"ERROR: Elemento \"Invalid password\" no mostrado.");
+        String invalidPassword = driver.findElement(By.cssSelector("body > div > div.page > div.main-container.col1-layout > div > div > div.account-login > ul > li > ul > li > span")).getText();
+        Assertions.assertEquals(invalidPassword,"Invalid login or password.");
     }
 }
