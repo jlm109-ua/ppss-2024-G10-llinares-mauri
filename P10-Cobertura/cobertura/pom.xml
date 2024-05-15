@@ -19,13 +19,11 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
             <version>5.10.1</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-params</artifactId>
-            <version>5.7.0</version>
-            <scope>test</scope>
+            <version>5.10.2</version>
         </dependency>
     </dependencies>
 
@@ -67,13 +65,37 @@
                         <configuration>
                             <rules>
                                 <rule>
-                                    <element>BUNDLE</element>
+                                    <element>BUNDLE</element> <!-- Para la totalidad del proyecto -->
                                     <limits>
                                         <limit>
-                                            <counter>COMPLEXITY</counter>
-                                            <value>COVEREDRATIO</value>
-                                            <minimum>0.60</minimum>
+                                            <counter>COMPLEXITY</counter> <!-- Complejidad ciclomática -->
+                                            <value>COVEREDRATIO</value> <!-- Porcentaje -->
+                                            <minimum>0.90</minimum> <!-- Mínimo de 90% -->
                                         </limit>
+                                    </limits>
+                                </rule>
+                                <rule>
+                                    <element>BUNDLE</element> <!-- Para la totalidad del proyecto -->
+                                    <limits>
+                                        <counter>INSTRUCTION</counter> <!-- A nivel de instrucción -->
+                                        <value>COVEREDRATIO</value> <!-- Porcentaje -->
+                                        <minimum>0.80</minimum> <!-- Mínimo de 80% -->
+                                    </limits>
+                                </rule>
+                                <rule>
+                                    <element>BUNDLE</element> <!-- Para la totalidad del proyecto -->
+                                    <limits>
+                                        <counter>CLASS</counter> <!-- A nivel de clase -->
+                                        <value>MISSEDCOUNT</value>
+                                        <maximum>0.00</maximum> <!-- No hay ninguna clase fuera de testeo -->
+                                    </limits>
+                                </rule>
+                                <rule>
+                                    <element>CLASS</element> <!-- A nivel de clase -->
+                                    <limits>
+                                        <counter>LINE</counter> <!-- Líneas -->
+                                        <value>COVEREDCOUNT</value>
+                                        <minimum>0.75</minimum>
                                     </limits>
                                 </rule>
                             </rules>

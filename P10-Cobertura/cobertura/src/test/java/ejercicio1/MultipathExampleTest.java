@@ -52,7 +52,7 @@ public class MultipathExampleTest {
     }
 
     @ParameterizedTest()
-    @Tag("d)")
+    @Tag("D")
     @MethodSource("d")
     public void testD(int a, int b, int c, int resultadoEsperado){
         assertEquals(resultadoEsperado,mp.multiPath2(a,b,c));
