@@ -9,4 +9,14 @@ public class MultipathExample {
         }
         return c;
     }
+
+    public int multiPath2(int a, int b, int c ) {
+        if ((a > 5) && (b < 5)) {
+                b += a;
+            }
+        if (c > 5) {
+                c += b;
+            }
+        return c;
+    }
 }
