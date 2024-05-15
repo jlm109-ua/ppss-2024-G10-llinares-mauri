@@ -1,3 +1,5 @@
+package ejercicio1;
+
 import ejercicio1.MultipathExample;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
